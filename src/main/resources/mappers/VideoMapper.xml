@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.goorm.youtube.mapper.VideoMapper">
+
+    <!-- SELECT -->
+    <select id="selectIndex" resultType="io.goorm.youtube.vo.Video">
+        SELECT *
+        FROM VIDEOS
+        WHERE publish_yn = 1 AND delete_yn = 'N'
+        ORDER BY video_seq desc
+    </select>
+
+    <!-- SELECT -->
+    <select id="selectAll" resultType="io.goorm.youtube.vo.Video">
+        SELECT * FROM VIDEOS
+        ORDER BY video_seq desc
+    </select>
+
+    <select id="selectById" parameterType="long" resultType="io.goorm.youtube.vo.Video">
+        SELECT * FROM VIDEOS WHERE video_seq = #{videoSeq}
+    </select>
+
+    <!-- INSERT -->
+    <insert id="insert" parameterType="io.goorm.youtube.vo.Video">
+        INSERT INTO VIDEOS (video,  video_thumnail, member_seq)
+        VALUES (#{video.video}, #{video.videoThumnail}, #{video.memberSeq})
+    </insert>
+
+    <!-- UPDATE -->
+    <update id="update" parameterType="io.goorm.youtube.vo.Video">
+        UPDATE VIDEOS
+        SET video = #{video.video}, video_thumnail = #{video.videoThumnail}
+        WHERE video_seq = #{video.videoSeq}
+    </update>
+
+    <!-- UPDATE -->
+    <update id="updatePublishYn" parameterType="io.goorm.youtube.vo.Video">
+        UPDATE VIDEOS
+        SET publish_yn = #{video.publishYn}
+        WHERE video_seq = #{video.videoSeq}
+    </update>
+
+    <!-- UPDATE -->
+    <update id="updateDeleteYn" parameterType="io.goorm.youtube.vo.Video">
+        UPDATE VIDEOS
+        SET delete_yn = #{video.deleteYn}
+        WHERE video_seq = #{video.videoSeq}
+    </update>
+
+    <!-- DELETE -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM VIDEOS WHERE video_seq = #{video.videoSeq}
+    </delete>
+
+</mapper>
