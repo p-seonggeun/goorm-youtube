@@ -2,7 +2,7 @@ package io.goorm.youtube.service;
 
 
 import io.goorm.youtube.mapper.VideoMapper;
-import io.goorm.youtube.vo.Video;
+import io.goorm.youtube.domain.Video;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,9 +15,44 @@ public class VideoService {
     @Autowired
     private VideoMapper videoMapper;
 
-    public List<Video> getVideoForIndex() {
+    @Autowired
+    public VideoService(VideoMapper videoMapper) {
+        this.videoMapper = videoMapper;
+    }
+
+    public List<Video> findIndex() {
 
         return videoMapper.selectIndex();
+    }
+
+    public List<Video> findAll() {
+
+        return videoMapper.selectAll();
+    }
+
+    public Video find(Long videoSeq) {
+
+        return videoMapper.selectById(videoSeq);
+    }
+
+    public int save(Video video) {
+
+        return videoMapper.insert(video);
+    }
+
+    public int update(Video video) {
+
+        return videoMapper.update(video);
+    }
+
+    public int updatePublishYn(Video video) {
+
+        return videoMapper.updatePublishYn(video);
+    }
+
+    public int updateDeleteYn(Video video) {
+
+        return videoMapper.updateDeleteYn(video);
     }
 
 }

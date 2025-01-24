@@ -1,4 +1,4 @@
-package io.goorm.youtube.vo;
+package io.goorm.youtube.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +11,11 @@ public class Video {
 
     private String video;
     private String videoThumnail;
+
+    private String title;
+    private String content;
+
+    private String channelName;
 
     private int publishYn;
     private String deleteYn;
