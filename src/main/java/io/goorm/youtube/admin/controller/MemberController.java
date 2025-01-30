@@ -1,6 +1,8 @@
 package io.goorm.youtube.admin.controller;
 
-import io.goorm.youtube.mapper.MemberMapper;
+import io.goorm.youtube.service.MemberService;
+import io.goorm.youtube.vo.DefaultVO;
+import io.goorm.youtube.vo.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,19 +16,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/mgr")
 public class MemberController {
 
-    MemberMapper memberMapper;
+    private final MemberService memberService;
 
     @Autowired
-    public MemberController(MemberMapper memberMapper) {
-        this.memberMapper = memberMapper;
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
     }
 
     //리스트
     @GetMapping("/members")
-    public String  list(Model model) {
+    public String  list(DefaultVO defaultVO, Model model) {
 
-        model.addAttribute("posts", memberMapper.selectAll());
+        model.addAttribute("posts", memberService.findAll(defaultVO));
         model.addAttribute("title", "사용자관라-리스트" );
+        model.addAttribute("page", defaultVO.getPage());
+        model.addAttribute("totalPages", defaultVO.getTotalPages());
+
         return "mgr/member/list";
     }
 
@@ -34,7 +39,10 @@ public class MemberController {
     @GetMapping("/members/{memberSeq}")
     public String  get(@PathVariable Long memberSeq, Model model) {
 
-        model.addAttribute("posts", memberMapper.selectById(memberSeq));
+        Member member = memberService.find(memberSeq);
+        member.setMemberPw("");
+
+        model.addAttribute("post", member);
         model.addAttribute("title", "사용자관라-상세화면" );
         
         return "mgr/member/view";

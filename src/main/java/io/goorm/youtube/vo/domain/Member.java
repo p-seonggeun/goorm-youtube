@@ -1,11 +1,12 @@
-package io.goorm.youtube.domain;
+package io.goorm.youtube.vo.domain;
 
+import io.goorm.youtube.vo.DefaultVO;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class Member {
+public class Member extends DefaultVO {
 
     private Long memberSeq;
     private String memberId;
@@ -18,4 +19,7 @@ public class Member {
 
     private String useYn;
     private String regDate;
+
+    private int videoCnt;
+
 }

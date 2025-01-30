@@ -1,9 +1,8 @@
 package io.goorm.youtube.controller;
 
 import io.goorm.youtube.commom.util.PasswordUtil;
-import io.goorm.youtube.domain.Member;
-import io.goorm.youtube.domain.Video;
 import io.goorm.youtube.service.MemberService;
+import io.goorm.youtube.vo.domain.Member;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class MemberController {
 
-    private MemberService memberService;
+    private final MemberService memberService;
 
     @Autowired
     public MemberController(MemberService memberService) {
@@ -71,6 +70,7 @@ public class MemberController {
     //로그인
     @PostMapping("/login")
     public String login(@ModelAttribute Member member, HttpSession session, Model model) {
+
 
         Member members = memberService.login(member);
 

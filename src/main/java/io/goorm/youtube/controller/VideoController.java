@@ -1,13 +1,14 @@
 package io.goorm.youtube.controller;
 
 import io.goorm.youtube.commom.util.FileUploadUtil;
-import io.goorm.youtube.domain.Member;
-import io.goorm.youtube.domain.Video;
-import io.goorm.youtube.mapper.VideoMapper;
 import io.goorm.youtube.service.VideoService;
+import io.goorm.youtube.vo.DefaultVO;
+import io.goorm.youtube.vo.domain.Video;
+
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class VideoController {
 
-    VideoService videoService;
+    private final VideoService videoService;
 
     @Autowired
     public VideoController(VideoService videoService) {
@@ -27,9 +28,9 @@ public class VideoController {
 
     //리스트
     @GetMapping("/videos")
-    public String list(Model model) {
+    public String list(@ModelAttribute DefaultVO defaultVO, Model model) {
 
-        model.addAttribute("posts", videoService.findAll());
+        model.addAttribute("posts", videoService.findAll(defaultVO));
         model.addAttribute("title", "비디오-리스트" );
 
         return "video/list";
@@ -80,6 +81,7 @@ public class VideoController {
         video.setVideoThumnail(thumbnailPath);
 
         try {
+
             videoService.save(video);
 
             model.addAttribute("msg", "비디오가 성공적으로 등록 되었습니다.");

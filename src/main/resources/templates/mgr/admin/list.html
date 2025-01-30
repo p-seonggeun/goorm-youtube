@@ -12,6 +12,7 @@
                 <th class="py-2 px-4">번호</th>
                 <th class="py-2 px-4">아이디</th>
                 <th class="py-2 px-4">이름</th>
+                <th class="py-2 px-4">사용여부</th>
                 <th class="py-2 px-4">관리</th>
             </tr>
         </thead>
@@ -19,20 +20,27 @@
             <!-- 여기에는 반복되는 행이 들어갑니다 -->
             <tr th:each="post : ${posts}">
                 <td class="border px-4 py-2">1</td>
-                <td class="border px-4 py-2" th:text="${post.adminId}">아이디</td>
-                <td class="border px-4 py-2" th:text="${post.adminName}">이름</td>
                 <td class="border px-4 py-2">
-                    <a href="#" class="text-blue-500 hover:underline">수정</a>
-                    <a href="#" class="text-red-500 hover:underline ml-2">삭제</a>
+                    <a th:href="@{'/mgr/admins/' + ${post.adminSeq}}" class="text-blue-500 hover:underline" th:text="${post.adminId}"></a>
+                </td>
+                <td class="border px-4 py-2">
+                    <a th:href="@{'/mgr/admins/' + ${post.adminSeq}}" class="text-blue-500 hover:underline" th:text="${post.adminName}"></a>
+                </td>
+                <td class="border px-4 py-2">
+                    <a th:href="@{'/mgr/admins/' + ${post.adminSeq}}" class="text-blue-500 hover:underline" th:text="${post.useYn}"></a>
+                    <a th:href="@{'/mgr/admins/' + ${post.adminSeq} + '/useyn'}" class="bg-blue-500 text-white my-8 px-2 py-2">정지</a>
+                </td>
+                <td class="border px-4 py-2">
+                    <a th:href="@{'/mgr/admins/' + ${post.adminSeq} + '/update'}" class="text-blue-500 hover:underline">수정</a>
                 </td>
             </tr>
         </tbody>
     </table>
     <!-- 페이징 -->
-    <div class="mt-4">
-        <a href="#" class="px-4 py-2 bg-blue-500 text-white rounded-lg">이전</a>
-        <a href="#" class="px-4 py-2 bg-blue-500 text-white rounded-lg ml-2">다음</a>
-    </div>
+        <div th:replace="fragments/pagination :: paginationFragment"></div>
+        <div class="w-full pt-4 text-right">
+            <a th:href="@{'/mgr/admins/create'}" class="bg-green-500 text-white rounded-lg px-4 py-2">등록</a>
+        </div>
     </main>
 
 </html>

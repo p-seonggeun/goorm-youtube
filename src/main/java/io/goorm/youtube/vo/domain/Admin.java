@@ -1,11 +1,12 @@
-package io.goorm.youtube.domain;
+package io.goorm.youtube.vo.domain;
 
+import io.goorm.youtube.vo.DefaultVO;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class Admin {
+public class Admin extends DefaultVO {
 
     private Long adminSeq;
     private String adminId;

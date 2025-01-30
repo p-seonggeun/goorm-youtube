@@ -1,6 +1,7 @@
 package io.goorm.youtube.mapper;
 
-import io.goorm.youtube.domain.Video;
+import io.goorm.youtube.vo.DefaultVO;
+import io.goorm.youtube.vo.domain.Video;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,9 +10,12 @@ import java.util.List;
 @Mapper
 public interface VideoMapper {
 
+    int selectCount();
+
+
     List<Video> selectIndex();
 
-    List<Video> selectAll();
+    List<Video> selectAll(@Param("defaultVO") DefaultVO defaultVO);
 
     Video selectById(@Param("videoSeq") Long seq);
 

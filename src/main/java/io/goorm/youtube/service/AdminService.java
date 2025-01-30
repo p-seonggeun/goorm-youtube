@@ -1,54 +1,27 @@
 package io.goorm.youtube.service;
 
 
-import io.goorm.youtube.mapper.AdminMapper;
-import io.goorm.youtube.domain.Admin;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.goorm.youtube.vo.DefaultVO;
+import io.goorm.youtube.vo.domain.Admin;
+import io.goorm.youtube.vo.domain.Member;
 
 import java.util.List;
 
-@Slf4j
-@org.springframework.stereotype.Service
-public class AdminService {
 
-    @Autowired
-    private AdminMapper adminMapper;
+public interface AdminService {
 
-    @Autowired
-    public AdminService(AdminMapper adminMapper) {
-        this.adminMapper = adminMapper;
-    }
+    public List<Admin> findAll(DefaultVO defaultVO);
 
+    public Admin find(Long seq);
 
-    public List<Admin> findAll() {
+    public Admin login(Admin admin);
 
-        return adminMapper.selectAll();
-    }
+    public int save(Admin admin);
 
-    public Admin find(Long adminSeq) {
+    public int update(Admin admin);
 
-        return adminMapper.selectById(adminSeq);
-    }
+    public int remove(Admin admin);
 
-    public int save(Admin admin) {
-
-        return adminMapper.insert(admin);
-    }
-
-    public int update(Admin admin) {
-
-        return adminMapper.update(admin);
-    }
-
-    public int remove(Admin admin) {
-
-        return adminMapper.updateUseYn(admin);
-    }
-
-    public int updatePublishYn(Admin admin) {
-
-        return adminMapper.updateUseYn(admin);
-    }
+    public int updateUseYn(Admin admin);
 
 }

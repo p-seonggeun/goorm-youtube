@@ -1,8 +1,13 @@
 package io.goorm.youtube.admin.controller;
 
 
-import io.goorm.youtube.domain.Admin;
+
+import io.goorm.youtube.commom.util.PasswordUtil;
+import io.goorm.youtube.vo.DefaultVO;
+import io.goorm.youtube.vo.domain.Admin;
 import io.goorm.youtube.service.AdminService;
+import io.goorm.youtube.vo.domain.Member;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,19 +20,71 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/mgr")
 public class AdminController {
 
-    AdminService adminService;
+    private final AdminService adminService;
 
     @Autowired
     public AdminController(AdminService adminService) {
         this.adminService = adminService;
     }
 
+    //로그인폼
+    @GetMapping("")
+    public String login( Model model) {
+
+        model.addAttribute("title", "관리자-로그인" );
+
+        return "mgr/admin/login";
+    }
+
+    //로그인
+    @PostMapping("/login")
+    public String login(@ModelAttribute Admin admin, HttpSession session, Model model) {
+
+
+        Admin admins = adminService.login(admin);
+
+        if ( admin != null && validateLogin(admins.getAdminPw(), admin.getAdminPw()) ) {
+
+            log.debug("성공");
+            session.setAttribute("admin", admins);
+
+            return "redirect:/mgr/admins";
+
+        } else {
+            log.debug("실패");
+            model.addAttribute("msg", "로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요");
+
+            return "mgr/admin/login";
+
+        }
+
+    }
+
+    public boolean validateLogin(String storedPassword, String password) {
+
+        log.debug("storedPassword : " + storedPassword);
+        log.debug("password : " + password);
+
+        return storedPassword != null && PasswordUtil.matches(password, storedPassword);
+    }
+
+    //로그아웃
+    @GetMapping("/logout")
+    public String logout(HttpSession session, Model model) {
+
+        session.invalidate();
+
+        return "redirect:/mgr";
+    }
+
     //리스트
     @GetMapping("/admins")
-    public String list(Model model) {
+    public String list(@ModelAttribute DefaultVO defaultVO, Model model) {
 
-        model.addAttribute("posts", adminService.findAll());
+        model.addAttribute("posts", adminService.findAll(defaultVO));
         model.addAttribute("title", "관리자관라-리스트" );
+        model.addAttribute("page", defaultVO.getPage());
+        model.addAttribute("totalPages", defaultVO.getTotalPages());
 
         return "mgr/admin/list";
     }
@@ -36,7 +93,11 @@ public class AdminController {
     @GetMapping("/admins/{adminSeq}")
     public String  get(@PathVariable("adminSeq") Long adminSeq, Model model) {
 
-        model.addAttribute("posts", adminService.find(adminSeq));
+
+        Admin admin = adminService.find(adminSeq);
+        admin.setAdminPw("");
+
+        model.addAttribute("post", adminService.find(adminSeq));
         model.addAttribute("title", "관리자관라-상세조회" );
 
         return "mgr/admin/view";
@@ -56,6 +117,8 @@ public class AdminController {
     @PostMapping("/admins")
     public String create(@ModelAttribute Admin admin, Model model) {
 
+        adminService.save(admin);
+
         return "redirect:/mgr/admins";
     }
 
@@ -64,7 +127,7 @@ public class AdminController {
     @GetMapping("/admins/{adminSeq}/update")
     public String updateForm(@PathVariable("adminSeq") Long adminSeq, Model model) {
 
-        model.addAttribute("posts", adminService.find(adminSeq));
+        model.addAttribute("post", adminService.find(adminSeq));
         model.addAttribute("title", "관리자관라-수정" );
 
         return "mgr/admin/update";
@@ -74,12 +137,34 @@ public class AdminController {
     @PostMapping("/admins/{adminSeq}")
     public String  update(@ModelAttribute Admin admin, Model model, RedirectAttributes redirectAttributes) {
 
+        adminService.update(admin);
+
         redirectAttributes.addAttribute("adminSeq", admin.getAdminSeq());
         redirectAttributes.addFlashAttribute("msg", "수정에 성공하였습니다.");
 
         return "redirect:/mgr/admins/{adminSeq}";
 
-        //return "redirect:/mgr/admins/" + admin.getAdminSeq();
+    }
+
+    //사용여부 변경
+    @GetMapping("/admins/{adminSeq}/useyn")
+    public String  updateUseYN(@PathVariable("adminSeq") Long adminSeq, Model model, RedirectAttributes redirectAttributes) {
+
+        Admin admin = adminService.find(adminSeq);
+
+        if (admin.getUseYn().equals("Y")) {
+            admin.setUseYn("N");
+        } else {
+            admin.setUseYn("Y");
+        }
+
+        adminService.updateUseYn(admin);
+
+        redirectAttributes.addAttribute("adminSeq", admin.getAdminSeq());
+        redirectAttributes.addFlashAttribute("msg", "사용여부 수정에 성공하였습니다.");
+
+        return "redirect:/mgr/admins";
+
     }
 
 }

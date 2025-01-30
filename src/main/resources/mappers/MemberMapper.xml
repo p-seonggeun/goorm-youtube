@@ -3,17 +3,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="io.goorm.youtube.mapper.MemberMapper">
+
+
     <!-- SELECT -->
-    <select id="selectAll" resultType="io.goorm.youtube.domain.Member">
-        SELECT * FROM MEMBER
-        ORDER BY member_seq desc
+    <select id="selectCount" resultType="int">
+        SELECT COUNT(*) FROM MEMBER
     </select>
 
-    <select id="selectById" parameterType="long" resultType="io.goorm.youtube.domain.Member">
+    <!-- SELECT -->
+    <select id="selectAll" parameterType="io.goorm.youtube.vo.DefaultVO" resultType="io.goorm.youtube.vo.domain.Member">
+        SELECT a.*, IFNULL(count(b.video_seq),0) as videoCnt
+        FROM MEMBER a LEFT JOIN VIDEO b ON
+        a.member_seq = b.member_seq
+        ORDER BY a.member_seq desc
+        LIMIT #{defaultVO.pageSize} OFFSET #{defaultVO.offset}
+    </select>
+
+    <select id="selectById" parameterType="long" resultType="io.goorm.youtube.vo.domain.Member">
         SELECT * FROM MEMBER WHERE member_seq = #{memberSeq}
     </select>
 
-    <select id="selectByMemberId" parameterType="String"  resultType="io.goorm.youtube.domain.Member">
+    <select id="selectByMemberId" parameterType="String"  resultType="io.goorm.youtube.vo.domain.Member">
         SELECT * FROM MEMBER WHERE member_id = #{memberId}
     </select>
 
@@ -24,20 +34,20 @@
     </select>
 
     <!-- INSERT -->
-    <insert id="insert" parameterType="io.goorm.youtube.domain.Member">
+    <insert id="insert" parameterType="io.goorm.youtube.vo.domain.Member">
         INSERT INTO MEMBER (member_id, member_pw, member_nick)
         VALUES (#{member.memberId}, #{member.memberPw}, #{member.memberNick})
     </insert>
 
     <!-- UPDATE -->
-    <update id="update" parameterType="io.goorm.youtube.domain.Member">
+    <update id="update" parameterType="io.goorm.youtube.vo.domain.Member">
         UPDATE MEMBER
         SET member_nick = #{member.memberNick}, member_id = #{member.memberId} , member_pw = #{member.memberPw}
         WHERE member_seq = #{member.memberSeq}
     </update>
 
     <!-- UPDATE -->
-    <update id="updateUseYn" parameterType="io.goorm.youtube.domain.Member">
+    <update id="updateUseYn" parameterType="io.goorm.youtube.vo.domain.Member">
         UPDATE MEMBER
         SET use_yn = #{member.useYn}
         WHERE member_seq = #{admin.memberSeq}

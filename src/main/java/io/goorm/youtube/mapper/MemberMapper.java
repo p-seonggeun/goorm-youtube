@@ -1,6 +1,8 @@
 package io.goorm.youtube.mapper;
 
-import io.goorm.youtube.domain.Member;
+import io.goorm.youtube.vo.DefaultVO;
+import io.goorm.youtube.vo.domain.Admin;
+import io.goorm.youtube.vo.domain.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,7 +11,9 @@ import java.util.List;
 @Mapper
 public interface MemberMapper {
 
-    List<Member> selectAll();
+    int selectCount();
+
+    List<Member> selectAll(@Param("defaultVO") DefaultVO defaultVO);
 
     Member selectById(@Param("memberSeq") Long memberSeq);
 

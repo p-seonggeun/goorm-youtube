@@ -1,58 +1,25 @@
 package io.goorm.youtube.service;
 
-import io.goorm.youtube.mapper.MemberMapper;
-import io.goorm.youtube.domain.Member;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.goorm.youtube.vo.DefaultVO;
+import io.goorm.youtube.vo.domain.Member;
 
 import java.util.List;
 
-@Slf4j
-@org.springframework.stereotype.Service
-public class MemberService {
 
+public interface MemberService {
 
-    @Autowired
-    private MemberMapper memberMapper;
+    public List<Member> findAll(DefaultVO defaultVO);
 
-    @Autowired
-    public MemberService(MemberMapper memberMapper) {
-        this.memberMapper = memberMapper;
-    }
+    public Member login(Member member);
 
+    public Member find(Long seq);
 
-    public List<Member> findAll() {
+    public boolean existsById(String seq);
 
-        return memberMapper.selectAll();
-    }
+    public int save(Member member);
 
-    public Member login(Member member) {
+    public int update(Member member);
 
-        return memberMapper.selectByMemberId(member.getMemberId());
-    }
-
-    public Member find(Long memberSeq) {
-
-        return memberMapper.selectById(memberSeq);
-    }
-
-    public boolean existsById(String memberId) {
-        return memberMapper.existsById(memberId);
-    }
-
-    public int save(Member member) {
-
-        return memberMapper.insert(member);
-    }
-
-    public int update(Member member) {
-
-        return memberMapper.update(member);
-    }
-
-    public int updatePublishYn(Member member) {
-
-        return memberMapper.updateUseYn(member);
-    }
+    public int updatePublishYn(Member member);
 
 }

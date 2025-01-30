@@ -5,32 +5,41 @@
 <mapper namespace="io.goorm.youtube.mapper.AdminMapper">
 
     <!-- SELECT -->
-    <select id="selectAll" resultType="io.goorm.youtube.domain.Admin">
-        SELECT * FROM ADMIN
-        ORDER BY admin_seq desc
-        LIMIT 10 OFFSET 20;
+    <select id="selectCount" resultType="int">
+        SELECT Count(*) FROM ADMIN
     </select>
 
-    <select id="selectById" parameterType="long" resultType="io.goorm.youtube.domain.Admin">
+    <!-- SELECT -->
+    <select id="selectAll" parameterType="io.goorm.youtube.vo.DefaultVO" resultType="io.goorm.youtube.vo.domain.Admin">
+        SELECT * FROM ADMIN
+        ORDER BY admin_seq desc
+        LIMIT #{defaultVO.pageSize} OFFSET #{defaultVO.offset}
+    </select>
+
+    <select id="selectById" parameterType="long" resultType="io.goorm.youtube.vo.domain.Admin">
         SELECT * FROM ADMIN WHERE admin_seq = #{adminSeq}
     </select>
 
+    <select id="selectByAdminId" parameterType="String"  resultType="io.goorm.youtube.vo.domain.Admin">
+        SELECT * FROM ADMIN WHERE admin_id = #{adminId}
+    </select>
+
     <!-- INSERT -->
-    <insert id="insert" parameterType="io.goorm.youtube.domain.Admin">
+    <insert id="insert" parameterType="io.goorm.youtube.vo.domain.Admin">
         INSERT INTO ADMIN (admin_id,  admin_pw, admin_name, reg_seq)
         VALUES (#{admin.adminId}, #{admin.adminPw}, #{admin.adminName}, #{admin.regSeq})
     </insert>
 
     <!-- UPDATE -->
-    <update id="update" parameterType="io.goorm.youtube.domain.Admin">
+    <update id="update" parameterType="io.goorm.youtube.vo.domain.Admin">
         UPDATE ADMIN
         SET admin_name = #{admin.adminName}, admin_id = #{admin.adminId} , admin_pw = #{admin.adminPw}
         WHERE admin_seq = #{admin.adminSeq}
     </update>
 
     <!-- UPDATE -->
-    <update id="updateUseYn" parameterType="io.goorm.youtube.domain.Admin">
-        UPDATE VIDEOS
+    <update id="updateUseYn" parameterType="io.goorm.youtube.vo.domain.Admin">
+        UPDATE ADMIN
         SET use_yn = #{admin.useYn}
         WHERE admin_seq = #{admin.adminSeq}
     </update>
