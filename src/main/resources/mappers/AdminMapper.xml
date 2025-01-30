@@ -11,8 +11,10 @@
 
     <!-- SELECT -->
     <select id="selectAll" parameterType="io.goorm.youtube.vo.DefaultVO" resultType="io.goorm.youtube.vo.domain.Admin">
-        SELECT * FROM ADMIN
-        ORDER BY admin_seq desc
+        SELECT a.*, r.admin_name as regName
+        FROM ADMIN a
+        LEFT JOIN ADMIN r ON a.reg_seq = r.admin_seq
+        ORDER BY a.admin_seq desc
         LIMIT #{defaultVO.pageSize} OFFSET #{defaultVO.offset}
     </select>
 

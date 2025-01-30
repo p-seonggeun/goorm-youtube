@@ -15,5 +15,6 @@ public class Admin extends DefaultVO {
     private String useYn;
 
     private String regSeq;
+    private String regName;
     private String regDate;
 }
