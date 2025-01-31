@@ -116,7 +116,13 @@ public class MemberController {
 
 
         Member member = (Member) session.getAttribute("member");
-        Long memberSeq = member.getMemberSeq();
+
+        if (member == null) {
+            // 세션에 사용자 정보가 없으면 로그인 화면으로 리다이렉트
+            return "redirect:/login";
+        }
+
+        Long memberSeq = member != null ? member.getMemberSeq() : 0;
 
         model.addAttribute("member", memberService.find(memberSeq));
         model.addAttribute("title", "사용자관라-상세화면" );

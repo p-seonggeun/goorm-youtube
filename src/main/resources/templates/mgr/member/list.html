@@ -13,6 +13,7 @@
                 <th class="py-2 px-4">닉네임</th>
                 <th class="py-2 px-4">아이디</th>
                 <th class="py-2 px-4">사용여부</th>
+                <th class="py-2 px-4">등록일</th>
                 <th class="py-2 px-4">업로드한 동영상 갯수</th>
             </tr>
             </thead>
@@ -24,6 +25,7 @@
                 </td>
                 <td class="border px-4 py-2" th:text="${post.memberId}"></td>
                 <td class="border px-4 py-2" th:text="${post.useYn}"></td>
+                <td class="border px-4 py-2" th:text="${post.regDate}"></td>
                 <td class="border px-4 py-2" th:text="${post.videoCnt}"></td>
             </tr>
             </tbody>

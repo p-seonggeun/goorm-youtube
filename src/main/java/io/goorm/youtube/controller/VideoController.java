@@ -6,14 +6,20 @@ import io.goorm.youtube.vo.DefaultVO;
 import io.goorm.youtube.vo.domain.Video;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -49,7 +55,7 @@ public class VideoController {
     //생성화면
     @GetMapping("/videos/create")
     public String  createForm(Model model, HttpSession session) {
-
+        log.debug("createForm");
         // 세션에서 로그인 정보 확인
         var member = session.getAttribute("member");
 
@@ -67,28 +73,32 @@ public class VideoController {
 
     //생성
     @PostMapping("/videos")
-    public String create(@ModelAttribute Video video,
+    public String create(@Valid @ModelAttribute Video video,
                          @RequestParam("videoFile") MultipartFile videoFile,
                          @RequestParam("videoThumnailFile") MultipartFile videoThumbnailFile,
                          Model model) {
 
-        // 업로드된 파일 처리 (서비스를 통해 위임)
-        String videoPath = FileUploadUtil.uploadFile(videoFile, "vod");
-        String thumbnailPath = FileUploadUtil.uploadFile(videoThumbnailFile, "thumbnail");
-
-        // 업로드된 파일 경로를 엔티티에 설정
-        video.setVideo(videoPath);
-        video.setVideoThumnail(thumbnailPath);
+        log.debug("create");
 
         try {
+
+            // 업로드된 파일 처리
+            String thumbnailPath = FileUploadUtil.uploadFile(videoThumbnailFile, "thumbnail");
+
+            String videoPath = FileUploadUtil.uploadFile(videoFile, "vod");
+
+
+            // 업로드된 파일 경로를 엔티티에 설정
+            video.setVideo(videoPath);
+            video.setVideoThumnail(thumbnailPath);
 
             videoService.save(video);
 
             model.addAttribute("msg", "비디오가 성공적으로 등록 되었습니다.");
 
         } catch (Exception e) {
-            model.addAttribute("msg", "비디오가 등록에 실패하였습니다.");
-            return "redirect:/videos"; // 예외 발생시 회원가입 폼으로
+            model.addAttribute("msg", "비디오등록에 실패하였습니다.");
+            return "redirect:/videos/create"; // 예외 발생시 등록 폼으로
         }
         
         return "redirect:/";

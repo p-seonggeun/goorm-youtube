@@ -37,7 +37,7 @@ public class AdminController {
     }
 
     //로그인
-    @PostMapping("/login")
+        @PostMapping("/login")
     public String login(@ModelAttribute Admin admin, HttpSession session, Model model) {
 
 
@@ -92,7 +92,6 @@ public class AdminController {
     //뷰
     @GetMapping("/admins/{adminSeq}")
     public String  get(@PathVariable("adminSeq") Long adminSeq, Model model) {
-
 
         Admin admin = adminService.find(adminSeq);
         admin.setAdminPw("");

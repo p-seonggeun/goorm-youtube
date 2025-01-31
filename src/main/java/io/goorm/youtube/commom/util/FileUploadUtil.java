@@ -21,7 +21,7 @@ public class FileUploadUtil {
         FileUploadUtil.uploadDir = uploadDir;
     }
 
-    public static String uploadFile(MultipartFile file, String subDir) {
+    public static String uploadFile(MultipartFile file, String subDir) throws Exception {
         // 서브 디렉토리 포함 경로 설정
         String fullPath = uploadDir + "/" + subDir;
         File dir = new File(fullPath);
@@ -41,7 +41,7 @@ public class FileUploadUtil {
             Path filePath = Paths.get(fullPath, uniqueFilename);
             file.transferTo(filePath.toFile());
         } catch (IOException e) {
-            throw new RuntimeException("파일 저장 중 오류가 발생했습니다: " + originalFilename, e);
+            throw new Exception("파일 저장 중 오류가 발생했습니다: " + originalFilename, e);
         }
 
         // 저장된 파일의 경로 반환 (웹 경로 기준)

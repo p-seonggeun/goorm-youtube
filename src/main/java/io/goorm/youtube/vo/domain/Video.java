@@ -1,8 +1,10 @@
 package io.goorm.youtube.vo.domain;
 
 import io.goorm.youtube.vo.DefaultVO;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Setter
 @Getter
@@ -13,6 +15,7 @@ public class Video extends DefaultVO {
     private String video;
     private String videoThumnail;
 
+    @NotBlank(message = "title is mandatory")
     private String title;
     private String content;
 
