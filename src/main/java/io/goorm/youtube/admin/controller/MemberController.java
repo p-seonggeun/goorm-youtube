@@ -3,6 +3,7 @@ package io.goorm.youtube.admin.controller;
 import io.goorm.youtube.service.MemberService;
 import io.goorm.youtube.vo.DefaultVO;
 import io.goorm.youtube.vo.domain.Member;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Controller("adminMemberController")
@@ -47,8 +51,6 @@ public class MemberController {
         
         return "mgr/member/view";
     }
-
-
 
 }
 

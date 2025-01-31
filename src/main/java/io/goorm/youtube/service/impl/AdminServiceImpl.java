@@ -1,4 +1,4 @@
-package io.goorm.youtube.service.impl.mybatis;
+package io.goorm.youtube.service.impl;
 
 
 import io.goorm.youtube.mapper.AdminMapper;

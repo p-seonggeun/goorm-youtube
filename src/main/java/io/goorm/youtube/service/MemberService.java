@@ -3,6 +3,7 @@ package io.goorm.youtube.service;
 import io.goorm.youtube.vo.DefaultVO;
 import io.goorm.youtube.vo.domain.Member;
 
+import java.io.IOException;
 import java.util.List;
 
 

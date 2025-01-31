@@ -1,4 +1,4 @@
-package io.goorm.youtube.service.impl.mybatis;
+package io.goorm.youtube.service.impl;
 
 import io.goorm.youtube.mapper.MemberMapper;
 import io.goorm.youtube.vo.DefaultVO;
@@ -7,6 +7,7 @@ import io.goorm.youtube.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
