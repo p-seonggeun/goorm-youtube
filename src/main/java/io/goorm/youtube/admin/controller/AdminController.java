@@ -116,6 +116,9 @@ public class AdminController {
     @PostMapping("/admins")
     public String create(@ModelAttribute Admin admin, Model model) {
 
+        String encryptedPassword = PasswordUtil.encryptPassword(admin.getAdminPw());
+        admin.setAdminPw(encryptedPassword);
+
         adminService.save(admin);
 
         return "redirect:/mgr/admins";
