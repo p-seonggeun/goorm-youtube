@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `ADMIN` (
+CREATE TABLE IF NOT EXISTS `admin` (
   `admin_seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '관리자순번',
   `admin_name` varchar(50) NOT NULL DEFAULT '0',
   `admin_id` varchar(50) NOT NULL COMMENT '관리자아이디',
@@ -15,7 +15,7 @@ INSERT INTO `ADMIN` (`admin_seq`, `admin_name`, `admin_id`, `admin_pw`, `reg_seq
 
 
 
-CREATE TABLE IF NOT EXISTS `MEMBER` (
+CREATE TABLE IF NOT EXISTS `member` (
   `member_seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '회원순번',
   `member_id` varchar(50) NOT NULL COMMENT '회원아이디',
   `member_pw` varchar(100) NOT NULL COMMENT '비밀번호',
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `MEMBER` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='회원테이블';
 
 
-CREATE TABLE IF NOT EXISTS `VIDEO` (
+CREATE TABLE IF NOT EXISTS `video` (
   `video_seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '동영상순번',
   `video` varchar(200) NOT NULL COMMENT '동영상',
   `video_thumnail` varchar(100) NOT NULL COMMENT '썸네일',

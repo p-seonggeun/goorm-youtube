@@ -5,7 +5,7 @@
 <mapper namespace="io.goorm.youtube.mapper.VideoMapper">
 
     <select id="selectCount" resultType="io.goorm.youtube.vo.domain.Video">
-        SELECT COUNT(*) FROM VIDEO a, MEMBER b
+        SELECT COUNT(*) FROM video a, member b
         WHERE a.member_seq = b.member_seq AND
         publish_yn = 1 AND delete_yn = 'N
     </select>
@@ -13,7 +13,7 @@
     <!-- SELECT -->
     <select id="selectIndex" resultType="io.goorm.youtube.vo.domain.Video">
         SELECT a.*, b.member_nick as channelName
-        FROM VIDEO a, MEMBER b
+        FROM video a, member b
         WHERE a.member_seq = b.member_seq AND
         publish_yn = 1 AND delete_yn = 'N'
         ORDER BY video_seq desc
@@ -21,45 +21,45 @@
 
     <!-- SELECT -->
     <select id="selectAll" parameterType="io.goorm.youtube.vo.DefaultVO" resultType="io.goorm.youtube.vo.domain.Video">
-        SELECT * FROM VIDEO
+        SELECT * FROM video
         ORDER BY video_seq desc
         LIMIT #{defaultVO.pageSize} OFFSET #{defaultVO.offset}
     </select>
 
     <select id="selectById" parameterType="long" resultType="io.goorm.youtube.vo.domain.Video">
-        SELECT * FROM VIDEO WHERE video_seq = #{videoSeq}
+        SELECT * FROM video WHERE video_seq = #{videoSeq}
     </select>
 
     <!-- INSERT -->
     <insert id="insert" parameterType="io.goorm.youtube.vo.domain.Video">
-        INSERT INTO VIDEO (video,  video_thumnail,title,content, member_seq)
+        INSERT INTO video (video,  video_thumnail,title,content, member_seq)
         VALUES (#{video.video}, #{video.videoThumnail}, #{video.title}, #{video.content}, #{video.memberSeq})
     </insert>
 
     <!-- UPDATE -->
     <update id="update" parameterType="io.goorm.youtube.vo.domain.Video">
-        UPDATE VIDEO
+        UPDATE video
         SET video = #{video.video}, video_thumnail = #{video.videoThumnail}, title = #{video.title}, content = #{video.content}
         WHERE video_seq = #{video.videoSeq}
     </update>
 
     <!-- UPDATE -->
     <update id="updatePublishYn" parameterType="io.goorm.youtube.vo.domain.Video">
-        UPDATE VIDEO
+        UPDATE video
         SET publish_yn = #{video.publishYn}
         WHERE video_seq = #{video.videoSeq}
     </update>
 
     <!-- UPDATE -->
     <update id="updateDeleteYn" parameterType="io.goorm.youtube.vo.domain.Video">
-        UPDATE VIDEO
+        UPDATE video
         SET delete_yn = #{video.deleteYn}
         WHERE video_seq = #{video.videoSeq}
     </update>
 
     <!-- DELETE -->
     <delete id="delete" parameterType="long">
-        DELETE FROM VIDEOS WHERE video_seq = #{video.videoSeq}
+        DELETE FROM videoS WHERE video_seq = #{video.videoSeq}
     </delete>
 
 </mapper>
