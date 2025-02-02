@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   UNIQUE KEY `admin_id` (`admin_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='관리자정보';
 
-INSERT INTO `ADMIN` (`admin_seq`, `admin_name`, `admin_id`, `admin_pw`, `reg_seq`, `use_yn`) VALUES
+INSERT INTO `admin` (`admin_name`, `admin_id`, `admin_pw`, `reg_seq`, `use_yn`) VALUES
 	('supser', 'admin', '$2a$10$nyCWhDaWmElsbCy08rxebu1WPPanpVr/tk450OjjdOJiWRUYcYXY.', 1, 'Y');
 
 
@@ -41,5 +41,5 @@ CREATE TABLE IF NOT EXISTS `video` (
   `delete_yn` char(1) NOT NULL DEFAULT 'N' COMMENT '삭제여부',
   PRIMARY KEY (`video_seq`),
   KEY `FK_VIDEOS_MEMBERS` (`member_seq`),
-  CONSTRAINT `FK_VIDEOS_MEMBERS` FOREIGN KEY (`member_seq`) REFERENCES `MEMBER` (`member_seq`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_VIDEOS_MEMBERS` FOREIGN KEY (`member_seq`) REFERENCES `member` (`member_seq`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='업로드 동영상';
