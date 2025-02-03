@@ -13,7 +13,7 @@
     <!-- SELECT -->
     <select id="selectAll" parameterType="io.goorm.youtube.vo.DefaultVO" resultType="io.goorm.youtube.vo.domain.Member">
         SELECT a.*, IFNULL(count(b.video_seq),0) as videoCnt
-        FROM member a LEFT JOIN VIDEO b ON
+        FROM member a LEFT JOIN video b ON
         a.member_seq = b.member_seq
         ORDER BY a.member_seq desc
         LIMIT #{defaultVO.pageSize} OFFSET #{defaultVO.offset}

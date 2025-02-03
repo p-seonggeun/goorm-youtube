@@ -1,12 +1,10 @@
 package io.goorm.youtube.admin.controller;
 
 
-
 import io.goorm.youtube.commom.util.PasswordUtil;
+import io.goorm.youtube.service.AdminService;
 import io.goorm.youtube.vo.DefaultVO;
 import io.goorm.youtube.vo.domain.Admin;
-import io.goorm.youtube.service.AdminService;
-import io.goorm.youtube.vo.domain.Member;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
