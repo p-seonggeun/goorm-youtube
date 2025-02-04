@@ -97,6 +97,7 @@ public class VideoController {
             model.addAttribute("msg", "비디오가 성공적으로 등록 되었습니다.");
 
         } catch (Exception e) {
+            log.debug(e.getMessage());
             model.addAttribute("msg", "비디오등록에 실패하였습니다.");
             return "redirect:/videos/create"; // 예외 발생시 등록 폼으로
         }
