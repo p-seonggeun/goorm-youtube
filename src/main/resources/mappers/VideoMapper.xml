@@ -4,10 +4,9 @@
 
 <mapper namespace="io.goorm.youtube.mapper.VideoMapper">
 
-    <select id="selectCount" resultType="io.goorm.youtube.vo.domain.Video">
+    <select id="selectCount" resultType="int">
         SELECT COUNT(*) FROM video a, member b
-        WHERE a.member_seq = b.member_seq AND
-        publish_yn = 1 AND delete_yn = 'N'
+        WHERE a.member_seq = b.member_seq
     </select>
 
     <!-- SELECT -->
@@ -21,7 +20,9 @@
 
     <!-- SELECT -->
     <select id="selectAll" parameterType="io.goorm.youtube.vo.DefaultVO" resultType="io.goorm.youtube.vo.domain.Video">
-        SELECT * FROM video
+        SELECT a.*, b.member_nick as channelName
+        FROM video a, member b
+        WHERE a.member_seq = b.member_seq
         ORDER BY video_seq desc
         LIMIT #{defaultVO.pageSize} OFFSET #{defaultVO.offset}
     </select>

@@ -131,13 +131,13 @@ public class MemberController {
     }
 
     //profile수정
-    @PostMapping("/members/{memberSeq}")
+    @PostMapping("/members")
     public String  update(@ModelAttribute Member member, Model model, RedirectAttributes redirectAttributes) {
 
         redirectAttributes.addAttribute("memberSeq", member.getMemberSeq());
         redirectAttributes.addFlashAttribute("msg", "수정에 성공하였습니다.");
 
-        return "redirect:/members/{memberSeq}";
+        return "redirect:/members";
 
         //return "redirect:/mgr/videos/" + video.getVideoSeq();
     }

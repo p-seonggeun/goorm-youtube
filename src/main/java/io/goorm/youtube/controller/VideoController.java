@@ -3,6 +3,7 @@ package io.goorm.youtube.controller;
 import io.goorm.youtube.commom.util.FileUploadUtil;
 import io.goorm.youtube.service.VideoService;
 import io.goorm.youtube.vo.DefaultVO;
+import io.goorm.youtube.vo.domain.Admin;
 import io.goorm.youtube.vo.domain.Video;
 
 import jakarta.servlet.http.HttpSession;
@@ -38,6 +39,9 @@ public class VideoController {
 
         model.addAttribute("posts", videoService.findAll(defaultVO));
         model.addAttribute("title", "비디오-리스트" );
+        model.addAttribute("page", defaultVO.getPage());
+        model.addAttribute("totalPages", defaultVO.getTotalPages());
+
 
         return "video/list";
     }
@@ -128,4 +132,24 @@ public class VideoController {
         //return "redirect:/mgr/videos/" + video.getVideoSeq();
     }
 
+    //사용여부 변경
+    @GetMapping("/videos/{videoSeq}/publishyn")
+    public String  updateUseYN(@PathVariable("videoSeq") Long videoSeq, Model model, RedirectAttributes redirectAttributes) {
+
+        Video video = videoService.find(videoSeq);
+
+        if (video.getPublishYn() == 0) {
+            video.setPublishYn(1);
+        } else {
+            video.setPublishYn(0);
+        }
+
+        videoService.updatePublishYn(video);
+
+        redirectAttributes.addAttribute("adminSeq", video.getVideoSeq());
+        redirectAttributes.addFlashAttribute("msg", "사용여부 수정에 성공하였습니다.");
+
+        return "redirect:/videos";
+
+    }
 }
