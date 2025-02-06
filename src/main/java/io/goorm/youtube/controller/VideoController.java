@@ -85,12 +85,9 @@ public class VideoController {
         log.debug("create");
 
         try {
-
             // 업로드된 파일 처리
             String thumbnailPath = FileUploadUtil.uploadFile(videoThumbnailFile, "thumbnail");
-
             String videoPath = FileUploadUtil.uploadFile(videoFile, "vod");
-
 
             // 업로드된 파일 경로를 엔티티에 설정
             video.setVideo(videoPath);
@@ -122,14 +119,34 @@ public class VideoController {
 
     //수정
     @PostMapping("/videos/{videoSeq}")
-    public String  update(@ModelAttribute Video video, Model model, RedirectAttributes redirectAttributes) {
+    public String  update(@ModelAttribute Video video,
+                          @PathVariable("videoSeq") Long videoSeq,
+                          @RequestParam("videoFile") MultipartFile videoFile,
+                          @RequestParam("videoThumnailFile") MultipartFile videoThumbnailFile,
+                          Model model, RedirectAttributes redirectAttributes) {
 
-        redirectAttributes.addAttribute("videoSeq", video.getVideoSeq());
-        redirectAttributes.addFlashAttribute("msg", "수정에 성공하였습니다.");
+        log.debug("update");
 
-        return "redirect:/videos/{videoSeq}";
+        try {
+            // 업로드된 파일 처리
+            String thumbnailPath = FileUploadUtil.uploadFile(videoThumbnailFile, "thumbnail");
+            String videoPath = FileUploadUtil.uploadFile(videoFile, "vod");
 
-        //return "redirect:/mgr/videos/" + video.getVideoSeq();
+            // 업로드된 파일 경로를 엔티티에 설정
+            video.setVideo(videoPath);
+            video.setVideoThumnail(thumbnailPath);
+
+            videoService.update(video);
+
+            model.addAttribute("msg", "비디오가 성공적으로 수정 되었습니다.");
+
+        } catch (Exception e) {
+            log.debug(e.getMessage());
+            model.addAttribute("msg", "비디오수정에 실패하였습니다.");
+            return "redirect:/videos/create"; // 예외 발생시 등록 폼으로
+        }
+
+        return "redirect:/";
     }
 
     //사용여부 변경

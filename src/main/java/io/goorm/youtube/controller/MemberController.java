@@ -125,7 +125,7 @@ public class MemberController {
         Long memberSeq = member != null ? member.getMemberSeq() : 0;
 
         model.addAttribute("member", memberService.find(memberSeq));
-        model.addAttribute("title", "사용자관라-상세화면" );
+        model.addAttribute("title", "사용자관리-상세화면" );
 
         return "profile";
     }
@@ -140,6 +140,25 @@ public class MemberController {
         return "redirect:/members";
 
         //return "redirect:/mgr/videos/" + video.getVideoSeq();
+    }
+
+
+    //비밀번호리셋폼
+    @GetMapping("/resetpw")
+    public String resetpwForm(Model model) {
+        model.addAttribute("title", "사용자-비밀번호재설정" );
+
+        return "resetpw";
+    }
+
+    //비밀번호리셋폼
+    @PostMapping("/resetpw")
+    public String resetpw(@ModelAttribute Member member, Model model) {
+        memberService.resetPw(member);
+
+        model.addAttribute("title", "사용자-비밀번호재설정" );
+
+        return "resetpw";
     }
 
 }

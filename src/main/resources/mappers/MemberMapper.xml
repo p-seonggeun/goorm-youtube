@@ -50,12 +50,19 @@
     <update id="updateUseYn" parameterType="io.goorm.youtube.vo.domain.Member">
         UPDATE member
         SET use_yn = #{member.useYn}
-        WHERE member_seq = #{admin.memberSeq}
+        WHERE member_seq = #{member.memberSeq}
     </update>
 
     <!-- DELETE -->
     <delete id="delete" parameterType="long">
         DELETE FROM member WHERE member_seq = #{memberSeq}
     </delete>
+
+    <!-- UPDATE -->
+    <update id="resetPw" parameterType="io.goorm.youtube.vo.domain.Member">
+        UPDATE member
+        SET member_pw = #{member.memberPw}
+        WHERE member_id = #{member.memberId}
+    </update>
 
 </mapper>

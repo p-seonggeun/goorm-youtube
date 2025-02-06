@@ -19,6 +19,8 @@ public interface MemberMapper {
 
     Member selectByMemberId(@Param("memberId") String memberId);
 
+    int resetPw(@Param("member") Member member);
+
     boolean existsById(String memberId);
 
     int insert(@Param("member") Member member);

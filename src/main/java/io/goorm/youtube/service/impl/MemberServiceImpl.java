@@ -43,6 +43,11 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.selectById(memberSeq);
     }
 
+    public int resetPw(Member member) {
+
+        return memberMapper.resetPw(member);
+    }
+
     public boolean existsById(String memberId) {
         return memberMapper.existsById(memberId);
     }
@@ -57,7 +62,7 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.update(member);
     }
 
-    public int updatePublishYn(Member member) {
+    public int updateUseYn(Member member) {
 
         return memberMapper.updateUseYn(member);
     }

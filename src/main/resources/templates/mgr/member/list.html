@@ -24,7 +24,10 @@
                     <a th:href="@{'/mgr/members/' + ${post.memberSeq}}" class="text-blue-500 hover:underline" th:text="${post.memberNick}"></a>
                 </td>
                 <td class="border px-4 py-2" th:text="${post.memberId}"></td>
-                <td class="border px-4 py-2" th:text="${post.useYn}"></td>
+                <td class="border px-4 py-2">
+                    <span th:text="${post.useYn}"></span>
+                    <a th:href="@{'/mgr/members/' + ${post.memberSeq} + '/useyn'}" class="bg-blue-500 text-white my-8 px-2 py-2">정지</a>
+                </td>
                 <td class="border px-4 py-2" th:text="${post.regDate}"></td>
                 <td class="border px-4 py-2" th:text="${post.videoCnt}"></td>
             </tr>
