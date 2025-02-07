@@ -10,11 +10,14 @@
     </select>
 
     <!-- SELECT -->
-    <select id="selectIndex" resultType="io.goorm.youtube.vo.domain.Video">
+    <select id="selectIndex" parameterType="io.goorm.youtube.vo.DefaultVO" resultType="io.goorm.youtube.vo.domain.Video">
         SELECT a.*, b.member_nick as channelName
         FROM video a, member b
         WHERE a.member_seq = b.member_seq AND
         publish_yn = 1 AND delete_yn = 'N'
+        <if test="defaultVO.searchKeyword != null and defaultVO.searchKeyword != ''  ">
+            AND a.title like CONCAT('%',#{defaultVO.searchKeyword},'%')
+        </if>
         ORDER BY video_seq desc
     </select>
 

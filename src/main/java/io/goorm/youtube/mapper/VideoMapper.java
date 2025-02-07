@@ -13,7 +13,7 @@ public interface VideoMapper {
     int selectCount();
 
 
-    List<Video> selectIndex();
+    List<Video> selectIndex(@Param("defaultVO") DefaultVO defaultVO);
 
     List<Video> selectAll(@Param("defaultVO") DefaultVO defaultVO);
 

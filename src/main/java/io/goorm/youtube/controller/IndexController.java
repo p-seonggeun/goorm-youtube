@@ -1,6 +1,7 @@
 package io.goorm.youtube.controller;
 
 import io.goorm.youtube.service.VideoService;
+import io.goorm.youtube.vo.DefaultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -26,13 +27,13 @@ public class IndexController {
 
     //메인화면
     @GetMapping("")
-    public String  index(Model model) {
+    public String  index(@ModelAttribute DefaultVO defaultVO, Model model) {
 
         String message = messageSource.getMessage("login.button", null, Locale.getDefault());
 
         log.debug("message",message);
 
-        model.addAttribute("videos", videoService.findIndex());
+        model.addAttribute("videos", videoService.findIndex(defaultVO));
 
         return "index";
     }

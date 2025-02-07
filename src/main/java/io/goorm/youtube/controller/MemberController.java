@@ -154,6 +154,11 @@ public class MemberController {
     //비밀번호리셋폼
     @PostMapping("/resetpw")
     public String resetpw(@ModelAttribute Member member, Model model) {
+        // 패스워드 암호화
+        String encryptedPassword = PasswordUtil.encryptPassword(member.getMemberPw());
+        member.setMemberPw(encryptedPassword);
+
+
         memberService.resetPw(member);
 
         model.addAttribute("title", "사용자-비밀번호재설정" );
