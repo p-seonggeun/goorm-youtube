@@ -33,7 +33,7 @@ public class AdminServiceImpl implements AdminService {
 
         int totalCount = adminMapper.selectCount();
         defaultVO.setTotalCount(totalCount);
-        defaultVO.setOffset();
+//        defaultVO.setOffset();
 
         return adminMapper.selectAll(defaultVO);
 

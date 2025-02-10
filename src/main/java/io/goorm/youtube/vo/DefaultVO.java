@@ -26,9 +26,13 @@ public class DefaultVO {
     /** 총 항목 수 */
     private int totalCount;
 
-    public int setOffset() {
-        return (page - 1) * (pageSize + 1);
+    public int getOffset() {
+        return (page - 1) * pageSize;
     }
+
+//    public int setOffset() {
+//        return (page - 1) * (pageSize + 1);
+//    }
 
     public int getTotalPages() {
         return (int) Math.ceil((double) totalCount / pageSize);

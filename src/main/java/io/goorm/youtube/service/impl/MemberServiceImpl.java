@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 
         int totalCount = memberMapper.selectCount();
         defaultVO.setTotalCount(totalCount);
-        defaultVO.setOffset();
+//        defaultVO.setOffset();
 
         return memberMapper.selectAll(defaultVO);
     }
